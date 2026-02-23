@@ -2,6 +2,7 @@
 #  WEEK 06 LAB: NETWORK DIAGNOSTIC LOGGER
 #  COMP2152
 #  [Sanyoung Yoon]
+# Final submission - Week06
 # ============================================================
 #
 #  This program runs network commands (ping, nslookup, ifconfig),
