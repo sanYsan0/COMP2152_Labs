@@ -1,0 +1,4 @@
+2026-02-22 21:57:38,ping,1.1.1.1,10.767,Success
+2026-02-22 21:57:57,nslookup,geirgebrown.ca,Not found,Failed
+2026-02-22 21:58:17,nslookup,georgebrown.ca,198.96.86.176,Success
+2026-02-22 21:58:25,ifconfig,en0,46:88:cb:0e:0e:27 / 192.168.2.102,Captured
