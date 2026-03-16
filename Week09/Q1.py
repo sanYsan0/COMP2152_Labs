@@ -1,6 +1,6 @@
 # ============================================================
 #  WEEK 09 LAB — Q1: SYSTEM INFORMATION REPORTER
-#  COMP2152 — [Sanyoung Yoon]
+#  COMP2152 — [Your Name Here]
 # ============================================================
 
 import os
