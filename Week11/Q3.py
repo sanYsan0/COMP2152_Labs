@@ -39,13 +39,13 @@ class Report:
     # TODO: Write add_finding(self, finding)
     #   Append the finding to self.findings
     def add_finding(self, finding):
-        pass
+        self.findings.append(finding)
 
     # TODO: Write get_by_severity(self, severity)
     #   Use a list comprehension to return only findings
     #   where f.severity == severity
     def get_by_severity(self, severity):
-        pass
+        return [f for f in self.findings if f.severity == severity]
 
     # TODO: Write summary(self)
     #   Print: "Team: {self.team_name}"
@@ -57,7 +57,14 @@ class Report:
     #   Print a separator line: "-" * 40
     #   Print each finding (just use print(f) — Python calls __str__ automatically)
     def summary(self):
-        pass
+        print(f"    Team: {self.team_name}")
+        print(f"    Total finding: {len(self.findings)}")
+        print(f"    HIGH:    {len(self.get_by_severity('HIGH'))}")
+        print(f"    MIDIUM:    {len(self.get_by_severity('MIDIUM'))}")
+        print(f"    LOW:    {len(self.get_by_severity('LOW'))}")
+        print(f"   " + "-" * 40)
+        for f in self.findings:
+            print(f"    {f}")
 
 
 # --- Main (provided) ---
