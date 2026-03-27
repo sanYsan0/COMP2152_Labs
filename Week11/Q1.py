@@ -29,20 +29,34 @@ class SimpleScanner:
     #   Otherwise: return False
     #   Always close the socket (use try/finally)
     def scan_port(self, port):
-        pass
+        try:
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            sock.settimeout(1)
+            result = sock.connect_ex((self.target, port))
+            if result == 0:
+                print(f"    Port {port}: OPEN")
+                self.open_ports.append(port)
+        finally:
+            sock.close()
 
     # TODO: Write scan_range(self, start_port, end_port)
     #   Loop from start_port to end_port (inclusive)
     #   Call self.scan_port(port) for each one
     def scan_range(self, start_port, end_port):
-        pass
+        for port in range(start_port, end_port+1):
+            self.scan_port(port)
 
     # TODO: Write display_results(self)
     #   Print "Results for {self.target}:"
     #   If self.open_ports is empty, print "  No open ports found."
     #   Otherwise, print each port: "  Port {port}"
     def display_results(self):
-        pass
+        print(f"    Result for {self.target}")
+        if not self.open_ports:
+            print(f"    No open ports found.")
+        else:
+            for port in self.open_ports:
+                print(f"    Port {port}")
 
 
 # --- Main (provided) ---
