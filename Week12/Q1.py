@@ -1,6 +1,6 @@
 # ============================================================
 #  WEEK 12 LAB — Q1: SCANNER INHERITANCE
-#  COMP2152 — [Your Name Here]
+#  COMP2152 — Sanyoung Yoon
 # ============================================================
 
 import socket
