@@ -1,6 +1,6 @@
 # ============================================================
 #  WEEK 14 LAB — Q1: API EXPLORER
-#  COMP2152 — [Your Name Here]
+#  COMP2152 — Sanyoung Yoon
 # ============================================================
 
 import urllib.request
@@ -13,14 +13,23 @@ import json
 #   Return: {"status": response.status, "headers": dict(response.headers), "body": body}
 #   If error occurs, return: {"status": 0, "headers": {}, "body": "", "error": str(e)}
 def make_request(url):
-    pass
+    response = urllib.request.urlopen(url)
+    body = response.read().decode()
+    status = response.status
+    headers = dict(response.headers)
+
+    return {
+        "status": status,
+        "headers": headers,
+        "body": body
+    }
 
 
 # TODO: Complete parse_json(body)
 #   Use json.loads(body) to convert JSON string to a dictionary
 #   If it fails (ValueError), return None
 def parse_json(body):
-    pass
+    return json.loads(body)
 
 
 # TODO: Complete check_api_info(response)
@@ -31,9 +40,20 @@ def parse_json(body):
 #     If headers.get("Access-Control-Allow-Origin") == "*" → append "CORS: open to all origins"
 #   Return findings
 def check_api_info(response):
-    pass
+    findings = []
+    headers = response["headers"]
 
+    if "Server" in headers:
+        findings.append(f"Server version exposed: {headers['Server']}")
 
+    if "X-Powered-By" in headers:
+        findings.append(f"Technology exposed: {headers['X-Powered-By']}")
+
+    if "Access-Control-Allow-Origin" in headers and headers["Access-Control-Allow-Origin"] == "*":
+        findings.append("CORS issue: Access-Control-Allow-Origin is set to *")
+
+    return findings
+        
 # --- Main (provided) ---
 if __name__ == "__main__":
     print("=" * 60)
