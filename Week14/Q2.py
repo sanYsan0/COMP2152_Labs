@@ -26,17 +26,28 @@ REQUIRED_HEADERS = {
 #   Return the list
 #   If the request fails, return an empty list
 def check_headers(url):
-    response = urllib.request.urlopen(url)
-    headers = dict(response.headers)
+    results = []
 
-    results = {}
+    try:
+        response = urllib.request.urlopen(url)
+        headers = dict(response.headers)
 
-    for header in REQUIRED_HEADERS:
-        if header in headers:
-            results[header] = ("present", headers[header])
-        else:
-            results[header] = ("missing", REQUIRED_HEADERS[header])
-
+        for header in REQUIRED_HEADERS:
+            if header in headers:
+                results.append({
+                    "header": header,
+                    "present": True,
+                    "value": headers[header]
+                })
+            else:
+                results.append({
+                    "header": header,
+                    "present": False,
+                    "value": "MISSING"
+                })
+    except:
+        return[]
+    
     return results
 
 
@@ -49,26 +60,21 @@ def check_headers(url):
 #       Increment missing_count
 #   Print f"  Missing {missing_count} of {len(results)} security headers!"
 def generate_report(url, results):
-    print("\n" + "="*50)
-    print(f"Checking: {url}")
-    print("="*50)
+    print(f"URL: {url}")
+    missing_count = 0
 
-    for header, (status, info) in results.items():
-        if status == "present":
-            print(f"  ✓ {header}: {info}")
+    for result in results:
+        header = result["header"]
+        present = result["present"]
+        value = result["value"]
+
+        if present:
+            print(f"  ✓ {header}: {value}")
         else:
-            print(f"  ✗ {header}: MISSING — {info}")
+            print(f"  ✗ {header}: MISSING — {REQUIRED_HEADERS[header]}")
+            missing_count += 1
 
-if __name__ == "__name__":
-    urls = [
-        "http://example.com",
-        "http://httpbin.org/get"
-    ]
-
-    for url in urls:
-        results = check_headers(url)
-        generate_report(url, results)
-
+    print(f"  Missing {missing_count} of {len(results)} security headers!")
 
 # --- Main (provided) ---
 if __name__ == "__main__":
