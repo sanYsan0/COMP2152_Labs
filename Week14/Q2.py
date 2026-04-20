@@ -1,6 +1,6 @@
 # ============================================================
 #  WEEK 14 LAB — Q2: HTTP SECURITY HEADER CHECKER
-#  COMP2152 — [Your Name Here]
+#  COMP2152 — Sanyoung Yoon
 # ============================================================
 
 import urllib.request
@@ -26,7 +26,18 @@ REQUIRED_HEADERS = {
 #   Return the list
 #   If the request fails, return an empty list
 def check_headers(url):
-    pass
+    response = urllib.request.urlopen(url)
+    headers = dict(response.headers)
+
+    results = {}
+
+    for header in REQUIRED_HEADERS:
+        if header in headers:
+            results[header] = ("present", headers[header])
+        else:
+            results[header] = ("missing", REQUIRED_HEADERS[header])
+
+    return results
 
 
 # TODO: Complete generate_report(url, results)
@@ -38,7 +49,25 @@ def check_headers(url):
 #       Increment missing_count
 #   Print f"  Missing {missing_count} of {len(results)} security headers!"
 def generate_report(url, results):
-    pass
+    print("\n" + "="*50)
+    print(f"Checking: {url}")
+    print("="*50)
+
+    for header, (status, info) in results.items():
+        if status == "present":
+            print(f"  ✓ {header}: {info}")
+        else:
+            print(f"  ✗ {header}: MISSING — {info}")
+
+if __name__ == "__name__":
+    urls = [
+        "http://example.com",
+        "http://httpbin.org/get"
+    ]
+
+    for url in urls:
+        results = check_headers(url)
+        generate_report(url, results)
 
 
 # --- Main (provided) ---
